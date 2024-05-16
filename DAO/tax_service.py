@@ -22,12 +22,12 @@ class ITaxService(ABC):
 
 
 class TaxService(DBConnection, ITaxService):
-    def calculate_tax(self, Tax):
+    def calculate_tax(self, employee_id, tax_year):
         try:
             tax_rate = 0.2
             self.cursor.execute(
                 "SELECT TaxableIncome FROM Tax WHERE EmployeeID=? AND TaxYear=?",
-                (Tax.employee_id, Tax.tax_year),
+                (employee_id, tax_year),
             )
             taxable_income = self.cursor.fetchone()[0]
             if taxable_income:
@@ -48,20 +48,18 @@ class TaxService(DBConnection, ITaxService):
         except Exception as e:
             print(e)
 
-    def get_tax_for_employee(self, Tax):
+    def get_tax_for_employee(self, employee_id):
         try:
-            self.cursor.execute(
-                "SELECT * FROM Tax WHERE EmployeeID=?", (Tax.employee_id)
-            )
+            self.cursor.execute("SELECT * FROM Tax WHERE EmployeeID=?", (employee_id))
             tax_data = self.cursor.fetchall()
             print(tax_data)
             self.conn.commit()
         except Exception as e:
             print(e)
 
-    def get_tax_for_year(self, Tax):
+    def get_tax_for_year(self, tax_year):
         try:
-            self.cursor.execute("SELECT * FROM Tax WHERE TaxYear=?", (Tax.tax_year))
+            self.cursor.execute("SELECT * FROM Tax WHERE TaxYear=?", (tax_year))
             tax_data = self.cursor.fetchall()
             print(tax_data)
             self.conn.commit()

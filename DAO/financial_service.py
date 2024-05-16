@@ -22,14 +22,14 @@ class IFinancialService(ABC):
 
 
 class FinancialService(DBConnection, IFinancialService):
-    def add_financial_record(self, FinancialRecord):
+    def add_financial_record(self, description, amount, record_type):
         try:
             self.cursor.execute(
                 "INSERT INTO FinancialRecord(RecordDate=GETDATE(), Description, Amount, RecordType) VALUES=(?,?,?)",
                 (
-                    FinancialRecord.description,
-                    FinancialRecord.amount,
-                    FinancialRecord.record_type,
+                    description,
+                    amount,
+                    record_type,
                 ),
             )
             record_data = self.cursor.fetchall()
@@ -47,22 +47,22 @@ class FinancialService(DBConnection, IFinancialService):
         except Exception as e:
             print(e)
 
-    def get_financial_records_for_employee(self, Financialrecord):
+    def get_financial_records_for_employee(self, employee_id):
         try:
             self.cursor.execute(
                 "SELECT * FROM FinancialRecord WHERE EmployeeID=?",
-                (Financialrecord.employee_id),
+                (employee_id),
             )
             record_data = self.cursor.fetchall()
             print(record_data)
         except Exception as e:
             print(e)
 
-    def get_financial_records_for_date(self, FinancialRecord):
+    def get_financial_records_for_date(self, record_date):
         try:
             self.cursor.execute(
                 "SELECT * FROM FinancialRecord WHERE RecordDate=?",
-                (FinancialRecord.record_date),
+                (record_date),
             )
             record_data = self.cursor.fetchall()
             print(record_data)
