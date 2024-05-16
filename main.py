@@ -1,7 +1,5 @@
 from DAO import EmployeeService, FinancialService, TaxService, PayrollService
-
-
-# financial_record_management()
+from Entity import Employee, Payroll, Tax, FinancialRecord
 
 
 class MainMenu:
@@ -13,7 +11,8 @@ class MainMenu:
     def employee_menu(self):
         while True:
             print(
-                """1.Read employee By ID
+                """
+                1.Read employee By ID
                 2. Read All employees
                 3.Add an Employee
                 4.Update an employee
@@ -26,40 +25,64 @@ class MainMenu:
                 employee_id = int(input("Enter the EmployeeID: "))
                 self.employee_service.get_employee_by_id(employee_id)
             elif choice == 2:
-                self.employee_service.read_employees()
+                self.employee_service.get_all_employees()
             elif choice == 3:
-                employee_data = (
-                    input("Enter first name: "),
-                    input("Enter last name: "),
-                    input("Enter date of birth (YYYY-MM-DD): "),
-                    input("Enter gender: "),
-                    input("Enter email: "),
-                    input("Enter phone number: "),
-                    input("Enter address: "),
-                    input("Enter position: "),
-                    input("Enter joining date (YYYY-MM-DD): "),
-                    input("Enter termination date (YYYY-MM-DD, if any): "),
+                first_name = input("Enter first name: ")
+                last_name = input("Enter last name: ")
+                date_of_birth = input("Enter date of birth (YYYY-MM-DD): ")
+                gender = input("Enter gender: ")
+                email = input("Enter email: ")
+                phone_number = input("Enter phone number: ")
+                address = input("Enter address: ")
+                position = input("Enter position: ")
+                joining_date = input("Enter joining date (YYYY-MM-DD): ")
+                termination_date = input(
+                    "Enter termination date (YYYY-MM-DD, if any): "
                 )
-                self.employee_service.add_employee(employee_data)
+                new_employee = Employee(
+                    first_name,
+                    last_name,
+                    date_of_birth,
+                    gender,
+                    email,
+                    phone_number,
+                    address,
+                    position,
+                    joining_date,
+                    termination_date,
+                )
+                self.employee_service.add_employee(new_employee)
             elif choice == 4:
-                employee_data = (
-                    input("Enter first name: "),
-                    input("Enter last name: "),
-                    input("Enter date of birth (YYYY-MM-DD): "),
-                    input("Enter gender: "),
-                    input("Enter email: "),
-                    input("Enter phone number: "),
-                    input("Enter address: "),
-                    input("Enter position: "),
-                    input("Enter joining date (YYYY-MM-DD): "),
-                    input("Enter termination date (YYYY-MM-DD, if any): "),
-                    int(input("Enter the EmployeeID to update: ")),
+                first_name = input("Enter first name: ")
+                last_name = input("Enter last name: ")
+                date_of_birth = input("Enter date of birth (YYYY-MM-DD): ")
+                gender = input("Enter gender: ")
+                email = input("Enter email: ")
+                phone_number = input("Enter phone number: ")
+                address = input("Enter address: ")
+                position = input("Enter position: ")
+                joined_date = input("Enter joining date (YYYY-MM-DD): ")
+                termination_date = input(
+                    "Enter termination date (YYYY-MM-DD, if any): "
                 )
-                self.employee_service.update_employee(employee_data)
+                employee_id = int(input("Enter the Employee ID: "))
+                updated_employee = Employee(
+                    first_name,
+                    last_name,
+                    date_of_birth,
+                    gender,
+                    email,
+                    phone_number,
+                    address,
+                    position,
+                    joined_date,
+                    termination_date,
+                )
+                self.employee_service.update_employee(updated_employee, employee_id)
 
             elif choice == 5:
                 employee_id = int(input("Enter employee Id: "))
-                self.employee_service.delete_employee(employee_id)
+                self.employee_service.remove_employee(employee_id)
             elif choice == 6:
                 break
             else:
@@ -69,7 +92,8 @@ class MainMenu:
 
         while True:
             print(
-                """1. Generate payroll
+                """
+                1. Generate payroll
                 2. Get payroll by ID
                 3. Get payrolls for an Employee
                 4. Get payrolls for a Period
@@ -91,7 +115,7 @@ class MainMenu:
             elif choice == 4:
                 start_date = input("Enter Start Date (YYYY-MM-DD): ")
                 end_date = input("Enter End Date (YYYY-MM-DD): ")
-                self.payroll_service.get_payrolls_for_period(start_date, end_date)
+                self.payroll_service.get_pay_rolls_for_period(start_date, end_date)
             elif choice == 5:
                 break
             else:
@@ -100,7 +124,8 @@ class MainMenu:
     def tax_menu(self):
         while True:
             print(
-                """1. Calculate tax
+                """
+                1. Calculate tax
                 2. Get tax by ID
                 3. Get taxes for an Employee
                 4. Get taxes for a Year
@@ -129,11 +154,14 @@ class MainMenu:
     def financial_record_menu(self):
 
         while True:
-            print("1. Add a financial record")
-            print("2. Get financial record by ID")
-            print("3. Get financial records for an Employee")
-            print("4. Get financial records for a Date")
-            print("5. Exit")
+            print(
+                """
+                  1. Add a financial record
+                  2. Get financial record by ID
+                  3. Get financial records for an Employee
+                  4. Get financial records for a Date
+                  5. EXIT"""
+            )
             choice = int(input("Please Choose from above options: "))
 
             if choice == 1:
@@ -164,7 +192,8 @@ def main():
     while True:
         print("Main Menu:")
         print(
-            """1. Employee Management
+            """
+              1. Employee Management
               2. Payroll Management
               3. Tax Management
               4. Financial Record Management
@@ -191,4 +220,4 @@ def main():
 
 if __name__ == "__main__":
     print("Welcome to the Pay Xpert 🎉")
-    MainMenu.main_menu()
+    main()

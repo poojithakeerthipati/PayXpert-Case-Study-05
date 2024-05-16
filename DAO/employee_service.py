@@ -71,23 +71,27 @@ class EmployeeService(DBConnection, IEmployeeService):
             print(e)
 
     def add_employee(self, Employee):
-        self.cursor.execute(
-            """INSERT INTO Employee(FirstName, LastName, DateOfBirth, Gender, Email,
-              PhoneNumber, Address, Position, JoiningDate, TerminationDate) 
-              VALUES(?,?,?,?,?,?,?,?,?)""",
-            (
-                Employee.first_name,
-                Employee.last_name,
-                Employee.date_of_birth,
-                Employee.gender,
-                Employee.phone_number,
-                Employee.address,
-                Employee.position,
-                Employee.joining_date,
-                Employee.termination_date,
-            ),
-        )
-        self.conn.commit()
+        try:
+            self.cursor.execute(
+                """INSERT INTO Employee(FirstName, LastName, DateOfBirth, Gender, Email,
+                PhoneNumber, Address, Position, JoiningDate, TerminationDate) 
+                VALUES(?,?,?,?,?,?,?,?,?,?)""",
+                (
+                    Employee.first_name,
+                    Employee.last_name,
+                    Employee.date_of_birth,
+                    Employee.gender,
+                    Employee.email,
+                    Employee.phone_number,
+                    Employee.address,
+                    Employee.position,
+                    Employee.joined_date,
+                    Employee.termination_date,
+                ),
+            )
+            self.conn.commit()
+        except Exception as e:
+            print("Error adding employee:", e)
 
     def update_employee(self, Employee, employee_id):
         try:
@@ -99,10 +103,11 @@ class EmployeeService(DBConnection, IEmployeeService):
                     Employee.last_name,
                     Employee.date_of_birth,
                     Employee.gender,
+                    Employee.email,
                     Employee.phone_number,
                     Employee.address,
                     Employee.position,
-                    Employee.joining_date,
+                    Employee.joined_date,
                     Employee.termination_date,
                     employee_id,
                 ),
@@ -111,7 +116,7 @@ class EmployeeService(DBConnection, IEmployeeService):
         except Exception as e:
             print(e)
 
-    def delete_employee(self, employee_id):
+    def remove_employee(self, employee_id):
         try:
             self.cursor.execute(
                 "DELETE FROM Employee WHERE EmployeeID=?", (employee_id)

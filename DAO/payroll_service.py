@@ -22,21 +22,20 @@ class IPayrollService(ABC):
 
 
 class PayrollService(DBConnection, IPayrollService):
-    def generate_payroll(self, Payroll):
+    def generate_payroll(self, employee_id, start_date, end_date):
         try:
             self.cursor.execute(
                 """SELECT *
                                 FROM PayRoll
-                                WHERE EmployeeID=? AND PayPeriodStartDate='?'AND PayPeriodEndDate = '?'""",
+                                WHERE EmployeeID=? AND PayPeriodStartDate=? AND PayPeriodEndDate = ?""",
                 (
-                    Payroll.employee_id,
-                    Payroll.pay_period_start_date,
-                    Payroll.pay_period_end_date,
+                    employee_id,
+                    start_date,
+                    end_date,
                 ),
             )
             pay_roll_data = self.cursor.fetchall()
             print(pay_roll_data)
-            self.conn.commit()
         except Exception as e:
             print(e)
 
@@ -49,10 +48,10 @@ class PayrollService(DBConnection, IPayrollService):
         except Exception as e:
             print(e)
 
-    def get_pay_rolls_for_employee(self, Payroll):
+    def get_pay_rolls_for_employee(self, employee_id):
         try:
             self.cursor.execute(
-                "SELECT * FROM PayRoll WHERE EmployeeID=?", (Payroll.employee_id)
+                "SELECT * FROM PayRoll WHERE EmployeeID=?", (employee_id)
             )
             pay_roll_data = self.cursor.fetchall()
             print(pay_roll_data)
@@ -60,15 +59,15 @@ class PayrollService(DBConnection, IPayrollService):
         except Exception as e:
             print(e)
 
-    def get_pay_rolls_for_period(self, Payroll):
+    def get_pay_rolls_for_period(self, start_date, end_date):
         try:
             self.cursor.execute(
                 """SELECT *
                                 FROM PayRoll
-                                WHERE PayPeriodStartDate='?'AND PayPeriodEndDate = '?'""",
+                                WHERE PayPeriodStartDate=? AND PayPeriodEndDate = ?""",
                 (
-                    Payroll.pay_period_start_date,
-                    Payroll.pay_period_end_date,
+                    start_date,
+                    end_date,
                 ),
             )
             pay_roll_data = self.cursor.fetchall()
