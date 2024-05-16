@@ -29,9 +29,9 @@ class TaxService(DBConnection, ITaxService):
                 "SELECT TaxableIncome FROM Tax WHERE EmployeeID=? AND TaxYear=?",
                 (employee_id, tax_year),
             )
-            taxable_income = self.cursor.fetchone()[0]
+            taxable_income = self.cursor.fetchone()
             if taxable_income:
-                tax_amount = taxable_income * tax_rate
+                tax_amount = float(taxable_income[0]) * tax_rate
                 return tax_amount
             else:
                 print("Not found")
