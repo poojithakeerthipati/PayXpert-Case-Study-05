@@ -1,6 +1,6 @@
 
 
-Use PayXpertDB;
+Use PayXpertDB1;
 
 INSERT INTO Employee
     ( FirstName, LastName, DateOfBirth, Gender, Email, PhoneNumber, Address, Position, JoiningDate, TerminationDate)
@@ -51,4 +51,10 @@ FROM Payroll;
 SELECT *
 FROM Tax;
 
-SELECT * FROM Employee WHERE EmployeeID=2;
+SELECT *
+FROM Employee
+WHERE EmployeeID=2;
+SELECT *
+FROM PayRoll
+WHERE EmployeeID=2 AND PayPeriodStartDate='2024-05-01'AND PayPeriodEndDate = '2024-05-15'
+

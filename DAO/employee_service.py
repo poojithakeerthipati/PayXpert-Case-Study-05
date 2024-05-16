@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 
 class IEmployeeService(ABC):
     @abstractmethod
-    def get_employee_by_id(self):
+    def get_employee_by_id(self, employee_id):
         pass
 
     @abstractmethod
@@ -13,15 +13,15 @@ class IEmployeeService(ABC):
         pass
 
     @abstractmethod
-    def add_employee(self):
+    def add_employee(self, Employee):
         pass
 
     @abstractmethod
-    def update_employee(self):
+    def update_employee(self, Employee, employee_id):
         pass
 
     @abstractmethod
-    def remove_employee(self):
+    def remove_employee(self, employee_id):
         pass
 
 

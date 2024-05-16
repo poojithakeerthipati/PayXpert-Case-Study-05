@@ -1,8 +1,8 @@
 --Creating a DATABASE Named PayXpertDB to create our tables
-CREATE DATABASE PayXpertDB;
+CREATE DATABASE PayXpertDB1;
 
 -- Using the DATABASE created
-Use PayXpertDB;
+Use PayXpertDB1;
 
 
 -- Creating Employee Table
