@@ -1,6 +1,7 @@
 from tabulate import tabulate
 from Util.DBConn import DBConnection
 from abc import ABC, abstractmethod
+from MyExceptions import EmployeeNotFoundException
 
 
 class IEmployeeService(ABC):
@@ -32,43 +33,49 @@ class EmployeeService(DBConnection, IEmployeeService):
                 "SELECT * FROM Employee WHERE EmployeeID=?", (employee_id)
             )
             employee_data = [list(row) for row in self.cursor.fetchall()]
-            headers = [
-                "EmployeeID",
-                "FirstName",
-                "LastName",
-                "DateOfBirth",
-                "Gender",
-                "Email",
-                "PhoneNumber",
-                "Address",
-                "Position",
-                "JoiningDate",
-                "TerminationDate",
-            ]
-            print(tabulate(employee_data, headers, tablefmt="grid"))
+            if employee_data:
+                headers = [
+                    "EmployeeID",
+                    "FirstName",
+                    "LastName",
+                    "DateOfBirth",
+                    "Gender",
+                    "Email",
+                    "PhoneNumber",
+                    "Address",
+                    "Position",
+                    "JoiningDate",
+                    "TerminationDate",
+                ]
+                print(tabulate(employee_data, headers, tablefmt="grid"))
+            else:
+                raise EmployeeNotFoundException(employee_id)
         except Exception as e:
-            print(e)
+            print("OOPS Error Happened")
 
     def get_all_employees(self):
         try:
             self.cursor.execute("SELECT * FROM Employee ")
             employee_data = [list(row) for row in self.cursor.fetchall()]
-            headers = [
-                "EmployeeID",
-                "FirstName",
-                "LastName",
-                "DateOfBirth",
-                "Gender",
-                "Email",
-                "PhoneNumber",
-                "Address",
-                "Position",
-                "JoiningDate",
-                "TerminationDate",
-            ]
-            print(tabulate(employee_data, headers, tablefmt="grid"))
+            if employee_data:
+                headers = [
+                    "EmployeeID",
+                    "FirstName",
+                    "LastName",
+                    "DateOfBirth",
+                    "Gender",
+                    "Email",
+                    "PhoneNumber",
+                    "Address",
+                    "Position",
+                    "JoiningDate",
+                    "TerminationDate",
+                ]
+                print(tabulate(employee_data, headers, tablefmt="grid"))
+            else:
+                raise EmployeeNotFoundException(employee_data[0])
         except Exception as e:
-            print(e)
+            print("Error Happened")
 
     def add_employee(self, Employee):
         try:
@@ -123,4 +130,4 @@ class EmployeeService(DBConnection, IEmployeeService):
             )
             self.conn.commit()
         except Exception as e:
-            print(e)
+            raise EmployeeNotFoundException(employee_id)

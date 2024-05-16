@@ -1,6 +1,7 @@
 from tabulate import tabulate
 from Util.DBConn import DBConnection
 from abc import ABC, abstractmethod
+from MyExceptions import FinancialRecordException
 
 
 class IFinancialService(ABC):
@@ -33,9 +34,12 @@ class FinancialService(DBConnection, IFinancialService):
                 ),
             )
             record_data = self.cursor.fetchall()
-            print(record_data)
+            if record_data:
+                print(record_data)
+            else:
+                raise FinancialRecordException()
         except Exception as e:
-            print(e)
+            print("OOPS Error Happened")
 
     def get_financial_record_by_id(self, record_id):
         try:
@@ -43,7 +47,10 @@ class FinancialService(DBConnection, IFinancialService):
                 "SELECT * FROM FinancialRecord WHERE RecordID=?", (record_id)
             )
             record_data = self.cursor.fetchall()
-            print(record_data)
+            if record_data:
+                print(record_data)
+            else:
+                raise FinancialRecordException
         except Exception as e:
             print(e)
 

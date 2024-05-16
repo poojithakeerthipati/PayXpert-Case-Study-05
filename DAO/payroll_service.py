@@ -1,6 +1,7 @@
 from Util.DBConn import DBConnection
 from abc import ABC, abstractmethod
 from tabulate import tabulate
+from MyExceptions import PayrollGenerationException
 
 
 class IPayrollService(ABC):
@@ -35,9 +36,12 @@ class PayrollService(DBConnection, IPayrollService):
                 ),
             )
             pay_roll_data = self.cursor.fetchall()
-            print(pay_roll_data)
+            if pay_roll_data:
+                print(pay_roll_data)
+            else:
+                raise PayrollGenerationException(employee_id)
         except Exception as e:
-            print(e)
+            print("OOPS ERROR HAPPENED")
 
     def get_pay_roll_by_id(self, payroll_id):
         try:

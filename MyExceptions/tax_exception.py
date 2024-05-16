@@ -1,3 +1,3 @@
 class TaxCalculationException(Exception):
-    def __init__(self, employee_id):
-        super().__init__(f"Tax with {employee_id} was not calculated")
+    def __init__(self, tax_id):
+        super().__init__(f"employee with {tax_id} was not found")

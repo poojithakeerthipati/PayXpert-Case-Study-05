@@ -1,6 +1,7 @@
 from Util.DBConn import DBConnection
 from abc import ABC, abstractmethod
 from tabulate import tabulate
+from MyExceptions import TaxCalculationException, InvalidInputException
 
 
 class ITaxService(ABC):
@@ -34,8 +35,7 @@ class TaxService(DBConnection, ITaxService):
                 tax_amount = float(taxable_income[0]) * tax_rate
                 return tax_amount
             else:
-                print("Not found")
-                return None
+                raise TaxCalculationException(employee_id)
         except Exception as e:
             print(e)
 
@@ -43,7 +43,10 @@ class TaxService(DBConnection, ITaxService):
         try:
             self.cursor.execute("SELECT * FROM Tax WHERE TaxID=?", (tax_id))
             tax_data = self.cursor.fetchall()
-            print(tax_data)
+            if tax_data:
+                print(tax_data)
+            else:
+                raise TaxCalculationException(tax_id)
             self.conn.commit()
         except Exception as e:
             print(e)
