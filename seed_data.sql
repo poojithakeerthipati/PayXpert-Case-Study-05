@@ -50,3 +50,5 @@ SELECT *
 FROM Payroll;
 SELECT *
 FROM Tax;
+
+SELECT * FROM Employee WHERE EmployeeID=2;
