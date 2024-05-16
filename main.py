@@ -1,194 +1,194 @@
-from DAO import EmployeeService, FinancialRecordService, TaxService, PayrollService
-
-
-def employee_management():
-    employee_service = EmployeeService()
-
-    while True:
-        print("1. Create an employee")
-        print("2. Delete an employee")
-        print("3. Read employees")
-        print("4. Update an employee")
-        print("5. Exit")
-        choice = input("Enter your choice: ")
-
-        if choice == "1":
-            employee_data = (
-                input("Enter first name: "),
-                input("Enter last name: "),
-                input("Enter date of birth (YYYY-MM-DD): "),
-                input("Enter gender: "),
-                input("Enter email: "),
-                input("Enter phone number: "),
-                input("Enter address: "),
-                input("Enter position: "),
-                input("Enter joining date (YYYY-MM-DD): "),
-                input("Enter termination date (YYYY-MM-DD, if any): "),
-            )
-            employee_service.create_employee(employee_data)
-        elif choice == "2":
-            employee_service.read_employees()
-            employee_id = input("Enter the EmployeeID: ")
-            employee_service.delete_employee(employee_id)
-        elif choice == "3":
-            employee_service.read_employees()
-        elif choice == "4":
-            employee_service.read_employees()
-            employee_data = (
-                input("Enter first name: "),
-                input("Enter last name: "),
-                input("Enter date of birth (YYYY-MM-DD): "),
-                input("Enter gender: "),
-                input("Enter email: "),
-                input("Enter phone number: "),
-                input("Enter address: "),
-                input("Enter position: "),
-                input("Enter joining date (YYYY-MM-DD): "),
-                input("Enter termination date (YYYY-MM-DD, if any): "),
-                input("Enter the EmployeeID to update: "),
-            )
-            employee_service.update_employee(employee_data)
-        elif choice == "5":
-            break
-        else:
-            print("Invalid choice. Please enter a valid option.")
-
-
-# employee_management()
-
-
-def payroll_management():
-    payroll_service = PayrollService()
-
-    while True:
-        print("1. Generate payroll for an employee")
-        print("2. Get payroll by ID")
-        print("3. Get payrolls for an employee")
-        print("4. Get payrolls for a period")
-        print("5. Exit")
-        choice = input("Enter your choice: ")
-
-        if choice == "1":
-            employee_id = input("Enter EmployeeID: ")
-            start_date = input("Enter Pay Period Start Date (YYYY-MM-DD): ")
-            end_date = input("Enter Pay Period End Date (YYYY-MM-DD): ")
-            payroll_service.generate_payroll(employee_id, start_date, end_date)
-        elif choice == "2":
-            payroll_id = input("Enter PayrollID: ")
-            payroll_service.get_payroll_by_id(payroll_id)
-        elif choice == "3":
-            employee_id = input("Enter EmployeeID: ")
-            payroll_service.get_payrolls_for_employee(employee_id)
-        elif choice == "4":
-            start_date = input("Enter Start Date (YYYY-MM-DD): ")
-            end_date = input("Enter End Date (YYYY-MM-DD): ")
-            payroll_service.get_payrolls_for_period(start_date, end_date)
-        elif choice == "5":
-            break
-        else:
-            print("Invalid choice. Please enter a valid option.")
-
-
-# payroll_management()
-
-
-def tax_management():
-    tax_service = TaxService()
-
-    while True:
-        print("1. Calculate tax for an employee")
-        print("2. Get tax by ID")
-        print("3. Get taxes for an employee")
-        print("4. Get taxes for a year")
-        print("5. Exit")
-        choice = input("Enter your choice: ")
-
-        if choice == "1":
-            employee_id = input("Enter EmployeeID: ")
-            tax_year = input("Enter Tax Year: ")
-            tax_service.calculate_tax(employee_id, tax_year)
-        elif choice == "2":
-            tax_id = input("Enter TaxID: ")
-            tax_service.get_tax_by_id(tax_id)
-        elif choice == "3":
-            employee_id = input("Enter EmployeeID: ")
-            tax_service.get_taxes_for_employee(employee_id)
-        elif choice == "4":
-            tax_year = input("Enter Tax Year: ")
-            tax_service.get_taxes_for_year(tax_year)
-        elif choice == "5":
-            break
-        else:
-            print("Invalid choice. Please enter a valid option.")
-
-
-# tax_management()
-
-
-def financial_record_management():
-    financial_record_service = FinancialRecordService()
-
-    while True:
-        print("1. Add a financial record for an employee")
-        print("2. Get financial record by ID")
-        print("3. Get financial records for an employee")
-        print("4. Get financial records for a date")
-        print("5. Exit")
-        choice = input("Enter your choice: ")
-
-        if choice == "1":
-            employee_id = input("Enter EmployeeID: ")
-            description = input("Enter description: ")
-            amount = input("Enter amount: ")
-            record_type = input("Enter record type: ")
-            financial_record_service.add_financial_record(
-                employee_id, description, amount, record_type
-            )
-        elif choice == "2":
-            record_id = input("Enter RecordID: ")
-            financial_record_service.get_financial_record_by_id(record_id)
-        elif choice == "3":
-            employee_id = input("Enter EmployeeID: ")
-            financial_record_service.get_financial_records_for_employee(employee_id)
-        elif choice == "4":
-            record_date = input("Enter Record Date (YYYY-MM-DD): ")
-            financial_record_service.get_financial_records_for_date(record_date)
-        elif choice == "5":
-            break
-        else:
-            print("Invalid choice. Please enter a valid option.")
+from DAO import EmployeeService, FinancialService, TaxService, PayrollService
 
 
 # financial_record_management()
 
 
 class MainMenu:
+    employee_service = EmployeeService()
+    payroll_service = PayrollService()
+    tax_service = TaxService()
+    financial_service = FinancialService()
 
-    @staticmethod
-    def main_menu():
+    def employee_menu(self):
         while True:
-            print("Main Menu:")
-            print("1. Employee Management")
-            print("2. Payroll Management")
-            print("3. Tax Management")
-            print("4. Financial Record Management")
-            print("5. Exit")
-            choice = input("Enter your choice: ")
+            print(
+                """1.Read employee By ID
+                2. Read All employees
+                3.Add an Employee
+                4.Update an employee
+                5.Delete an employee
+                6.EXIT"""
+            )
+            choice = int(input("Please Choose from above options: "))
 
-            if choice == "1":
-                employee_management()
-            elif choice == "2":
-                payroll_management()
-            elif choice == "3":
-                tax_management()
-            elif choice == "4":
-                financial_record_management()
-            elif choice == "5":
-                print("Goodbye! Come back soon")
+            if choice == 1:
+                employee_id = int(input("Enter the EmployeeID: "))
+                self.employee_service.get_employee_by_id(employee_id)
+            elif choice == 2:
+                self.employee_service.read_employees()
+            elif choice == 3:
+                employee_data = (
+                    input("Enter first name: "),
+                    input("Enter last name: "),
+                    input("Enter date of birth (YYYY-MM-DD): "),
+                    input("Enter gender: "),
+                    input("Enter email: "),
+                    input("Enter phone number: "),
+                    input("Enter address: "),
+                    input("Enter position: "),
+                    input("Enter joining date (YYYY-MM-DD): "),
+                    input("Enter termination date (YYYY-MM-DD, if any): "),
+                )
+                self.employee_service.add_employee(employee_data)
+            elif choice == 4:
+                employee_data = (
+                    input("Enter first name: "),
+                    input("Enter last name: "),
+                    input("Enter date of birth (YYYY-MM-DD): "),
+                    input("Enter gender: "),
+                    input("Enter email: "),
+                    input("Enter phone number: "),
+                    input("Enter address: "),
+                    input("Enter position: "),
+                    input("Enter joining date (YYYY-MM-DD): "),
+                    input("Enter termination date (YYYY-MM-DD, if any): "),
+                    int(input("Enter the EmployeeID to update: ")),
+                )
+                self.employee_service.update_employee(employee_data)
+
+            elif choice == 5:
+                employee_id = int(input("Enter employee Id: "))
+                self.employee_service.delete_employee(employee_id)
+            elif choice == 6:
+                break
+            else:
+                print("Invalid choice. Please enter a valid option.")
+
+    def payroll_menu(self):
+
+        while True:
+            print(
+                """1. Generate payroll
+                2. Get payroll by ID
+                3. Get payrolls for an Employee
+                4. Get payrolls for a Period
+                5. EXIT"""
+            )
+            choice = int(input("Please Choose from above options: "))
+
+            if choice == 1:
+                employee_id = int(input("Enter EmployeeID: "))
+                start_date = input("Enter Pay Period Start Date (YYYY-MM-DD): ")
+                end_date = input("Enter Pay Period End Date (YYYY-MM-DD): ")
+                self.payroll_service.generate_payroll(employee_id, start_date, end_date)
+            elif choice == 2:
+                payroll_id = int(input("Enter PayrollID: "))
+                self.payroll_service.get_pay_roll_by_id(payroll_id)
+            elif choice == 3:
+                employee_id = int(input("Enter EmployeeID: "))
+                self.payroll_service.get_pay_rolls_for_employee(employee_id)
+            elif choice == 4:
+                start_date = input("Enter Start Date (YYYY-MM-DD): ")
+                end_date = input("Enter End Date (YYYY-MM-DD): ")
+                self.payroll_service.get_payrolls_for_period(start_date, end_date)
+            elif choice == 5:
+                break
+            else:
+                print("Invalid choice. Please enter a valid option.")
+
+    def tax_menu(self):
+        while True:
+            print(
+                """1. Calculate tax
+                2. Get tax by ID
+                3. Get taxes for an Employee
+                4. Get taxes for a Year
+                5. EXIT"""
+            )
+            choice = int(input("Please Choose from above options: "))
+
+            if choice == 1:
+                employee_id = int(input("Enter EmployeeID: "))
+                tax_year = input("Enter Tax Year: ")
+                self.tax_service.calculate_tax(employee_id, tax_year)
+            elif choice == 2:
+                tax_id = int(input("Enter TaxID: "))
+                self.tax_service.get_tax_by_id(tax_id)
+            elif choice == 3:
+                employee_id = int(input("Enter EmployeeID: "))
+                self.tax_service.get_tax_for_employee(employee_id)
+            elif choice == 4:
+                tax_year = input("Enter Tax Year: ")
+                self.tax_service.get_tax_for_year(tax_year)
+            elif choice == 5:
+                break
+            else:
+                print("Invalid choice. Please enter a valid option.")
+
+    def financial_record_menu(self):
+
+        while True:
+            print("1. Add a financial record")
+            print("2. Get financial record by ID")
+            print("3. Get financial records for an Employee")
+            print("4. Get financial records for a Date")
+            print("5. Exit")
+            choice = int(input("Please Choose from above options: "))
+
+            if choice == 1:
+                employee_id = int(input("Enter EmployeeID: "))
+                description = input("Enter description: ")
+                amount = float(input("Enter amount: "))
+                record_type = input("Enter record type: ")
+                self.financial_service.add_financial_record(
+                    employee_id, description, amount, record_type
+                )
+            elif choice == 2:
+                record_id = int(input("Enter RecordID: "))
+                self.financial_service.get_financial_record_by_id(record_id)
+            elif choice == 3:
+                employee_id = int(input("Enter EmployeeID: "))
+                self.financial_service.get_financial_records_for_employee(employee_id)
+            elif choice == 4:
+                record_date = input("Enter Record Date (YYYY-MM-DD): ")
+                self.financial_service.get_financial_records_for_date(record_date)
+            elif choice == 5:
                 break
             else:
                 print("Invalid choice. Please enter a valid option.")
 
 
+def main():
+    main_menu = MainMenu()
+    while True:
+        print("Main Menu:")
+        print(
+            """1. Employee Management
+              2. Payroll Management
+              3. Tax Management
+              4. Financial Record Management
+              5. Exit"""
+        )
+        choice = int(input("Please Choose from above options: "))
+
+        if choice == 1:
+            main_menu.employee_menu()
+        elif choice == 2:
+            main_menu.payroll_menu()
+        elif choice == 3:
+            main_menu.tax_menu()
+        elif choice == 4:
+            main_menu.financial_record_menu()
+        elif choice == 5:
+            main_menu.employee_service.close()
+            main_menu.payroll_service.close()
+            main_menu.tax_service.close()
+            main_menu.financial_service.close()
+            print("Goodbye! Come back soon")
+            break
+
+
 if __name__ == "__main__":
+    print("Welcome to the Pay Xpert 🎉")
     MainMenu.main_menu()
