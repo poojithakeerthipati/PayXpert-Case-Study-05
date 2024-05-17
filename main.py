@@ -214,7 +214,7 @@ def main():
             main_menu.payroll_service.close()
             main_menu.tax_service.close()
             main_menu.financial_service.close()
-            print("Thank you Using our App , Visit Again")
+            print("Thank you for Using our App , Visit Again")
             break
 
 
