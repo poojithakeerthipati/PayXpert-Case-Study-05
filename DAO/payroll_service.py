@@ -79,3 +79,4 @@ class PayrollService(DBConnection, IPayrollService):
             self.conn.commit()
         except Exception as e:
             print(e)
+        return pay_roll_data
