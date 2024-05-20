@@ -28,12 +28,12 @@ class TestPayrollSystem(unittest.TestCase):
         employee_id = 8
         self.employee_service.add_employee(test_employee)
         self.payroll_service.generate_payroll(employee_id, "2024-05-01", "2024-05-31")
-        # payroll = self.payroll_service.get_pay_rolls_for_period(
-        #     "2024-05-01", "2024-05-31"
-        # )
+        payroll = self.payroll_service.get_pay_rolls_for_period(
+            "2024-05-01", "2024-05-15"
+        )
         self.assertIsNotNone(self.test_calculate_gross_salary_for_employee)
-        # self.assertIsNotNone(payroll.gross_salary)
-        # self.employee_service.remove_employee(employee_id)
+        self.assertIsNotNone(payroll.net_salary)
+        self.employee_service.remove_employee(employee_id)
 
     def test_calculate_net_salary_after_deductions(self):
         employee_id = 9

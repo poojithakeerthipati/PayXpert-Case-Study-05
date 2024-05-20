@@ -44,7 +44,8 @@ class FinancialService(DBConnection, IFinancialService):
     def get_financial_record_by_id(self, record_id):
         try:
             self.cursor.execute(
-                "SELECT * FROM FinancialRecord WHERE RecordID=?", (record_id)
+                "SELECT * FROM FinancialRecord inner join Employee on FinancialRecord.EmployeeID = Employee.EmployeeID where RecordID=? ",
+                (record_id),
             )
             record_data = self.cursor.fetchall()
             if record_data:
@@ -57,7 +58,7 @@ class FinancialService(DBConnection, IFinancialService):
     def get_financial_records_for_employee(self, employee_id):
         try:
             self.cursor.execute(
-                "SELECT * FROM FinancialRecord WHERE EmployeeID=?",
+                "SELECT * FROM FinancialRecord  WHERE EmployeeID=?",
                 (employee_id),
             )
             record_data = self.cursor.fetchall()
@@ -68,7 +69,7 @@ class FinancialService(DBConnection, IFinancialService):
     def get_financial_records_for_date(self, record_date):
         try:
             self.cursor.execute(
-                "SELECT * FROM FinancialRecord WHERE RecordDate=?",
+                "SELECT * FROM FinancialRecord inner join Employee on FinancialRecord.EmployeeID = Employee.EmployeeID WHERE RecordDate=?",
                 (record_date),
             )
             record_data = self.cursor.fetchall()

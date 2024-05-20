@@ -55,7 +55,9 @@ class EmployeeService(DBConnection, IEmployeeService):
 
     def get_all_employees(self):
         try:
-            self.cursor.execute("SELECT * FROM Employee ")
+            self.cursor.execute(
+                "select * from Employee inner join Payroll on Employee.EmployeeID= Payroll.EmployeeID "
+            )
             employee_data = [list(row) for row in self.cursor.fetchall()]
             if employee_data:
                 headers = [
@@ -70,6 +72,13 @@ class EmployeeService(DBConnection, IEmployeeService):
                     "Position",
                     "JoiningDate",
                     "TerminationDate",
+                    "PayrollID" "EmployeeID",
+                    "PayPeriodStartDate",
+                    "PayPeriodEndDate",
+                    "BasicSalary",
+                    "OvertimePay",
+                    "Deductions",
+                    "NetSalary",
                 ]
                 print(tabulate(employee_data, headers, tablefmt="grid"))
             else:

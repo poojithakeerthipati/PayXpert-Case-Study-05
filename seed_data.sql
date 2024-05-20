@@ -60,3 +60,7 @@ WHERE EmployeeID=2 AND PayPeriodStartDate='2024-05-01'AND PayPeriodEndDate = '20
 INSERT INTO Employee(FirstName, LastName, DateOfBirth, Gender, Email,
               PhoneNumber, Address, Position, JoiningDate, TerminationDate) 
               VALUES('james','bond','09-09-2002','M','james@gmail.com','87587457','caloifornia','manager','2002-09-13','2026-09-25')
+
+select * from Employee inner join Payroll on Employee.EmployeeID= Payroll.EmployeeID;
+SELECT * FROM FinancialRecord inner join Employee on FinancialRecord.EmployeeID = Employee.EmployeeID where RecordID=2 
+SELECT * FROM FinancialRecord inner join Employee on FinancialRecord.EmployeeID = Employee.EmployeeID WHERE EmployeeID=3
